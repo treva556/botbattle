@@ -3,7 +3,7 @@ import BotsCollection from './BotCollection'
 import YourBotArmy from './YourBotArmy'
 import BotSpecs from '../components/BotSpecs'
 import BotSearch from '../components/BotSearch'
-import Filter from '../components/Filter'
+//import Filter from '../components/Filter'
 
 class BotsPage extends React.Component {
   constructor(){
@@ -116,7 +116,7 @@ class BotsPage extends React.Component {
       <div>
         <BotSearch handleClear={this.handleClear} handleChange={this.handleChange}/>
         <br></br>
-        <Filter filterChange={this.filterChange}/>
+       {/*} <Filter filterChange={this.filterChange}/>*/}
         <YourBotArmy bots={this.filterOwnedBots()} addBot={this.clickBot}/>
         <br></br>
         {this.state.selectBot ? <BotSpecs bot={this.state.selectBot} clearSpec={this.clearSpec} addBot={this.addBot} />: 

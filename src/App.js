@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import BotsPage from "./containers/BotsPage";
+import BotsPage from "./containers/BotPage";
 
 
 class App extends Component {
