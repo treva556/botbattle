@@ -3,7 +3,7 @@ import BotsCollection from './BotCollection'
 import YourBotArmy from './YourBotArmy'
 import BotSpecs from '../components/BotSpecs'
 import BotSearch from '../components/BotSearch'
-//import Filter from '../components/Filter'
+import Filter from "../components/filter";
 
 class BotsPage extends React.Component {
   constructor(){
@@ -17,7 +17,7 @@ class BotsPage extends React.Component {
   }
 
   componentDidMount(){
-    fetch('https://bot-battler-api.herokuapp.com/api/v1/bots')
+    fetch('http://localhost:3000/bots')
     .then(res => res.json())
     .then(bots => this.setBots(bots))
       .then(bots => this.setState({
