@@ -13,7 +13,7 @@ class BotsPage extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:3000/bots')
+    fetch('https://json-server-vercel2-p5ompaq1q-treva556.vercel.app/bots')
       .then(response => response.json())
       .then(bots => this.setState({ botCollection: bots, filteredCollection: bots }))
       .then(console.log("Bots Fetched!"))
@@ -47,7 +47,7 @@ class BotsPage extends Component {
 
     this.setState({ botCollection: newCollection, filteredCollection: newFilteredCollection, botArmy: newArmy })
 
-    fetch(`http://localhost:3000/bots/${bot.id}`, {
+    fetch(`https://json-server-vercel2-p5ompaq1q-treva556.vercel.app/bots${bot.id}`, {
       method: 'DELETE'
     }).then(response => response.json())
       .then(result => console.log(result))
