@@ -1,62 +1,77 @@
-import React from "react";
+import React from "react"
+
+const botTypeClasses = {
+  Assault: "icon military",
+  Defender: "icon shield",
+  Support: "icon plus circle",
+  Medic: "icon ambulance",
+  Witch: "icon magic",
+  Captain: "icon star"
+}
 
 const BotCard = props => {
-  const { bot } = props;
+  const { bot, action, removeCard } = props
 
-  let botType;
-
-  switch (bot.bot_class) {
-    case "Assault":
-      botType = <i className="icon military" />;
-      break;
-    case "Defender":
-      botType = <i className="icon shield" />;
-      break;
-    case "Support":
-      botType = <i className="icon ambulance" />;
-      break;
-    default:
-      botType = <div />;
+  function handleClick(e) {
+    console.log("handleClick fired!")
+    // e.stopPropagation()
+    action(bot)
   }
+
+  function handleDischarge(e) {
+    console.log("Red X Clicked!")
+    e.stopPropagation()
+    removeCard(bot)
+  }
+
 
   return (
     <div className="ui column">
       <div
         className="ui card"
-        key={bot.id}
-        onClick={() => props.addBot(bot)}
+        key={props.bot.id}
+        onClick={handleClick}
       >
         <div className="image">
-          <img alt="oh no!" src={bot.avatar_url} />
+          <img alt="oh no!" src={props.bot.avatar_url} />
         </div>
         <div className="content">
           <div className="header">
-            {bot.name} {botType}
+            {props.bot.name}
+            <i className={botTypeClasses[props.bot.bot_class]} />
           </div>
-
           <div className="meta text-wrap">
-            <small>{bot.catchphrase}</small>
+            <small>{props.bot.catchphrase}</small>
           </div>
         </div>
         <div className="extra content">
           <span>
             <i className="icon heartbeat" />
-            {bot.health}
+            {props.bot.health}
           </span>
 
           <span>
             <i className="icon lightning" />
-            {bot.damage}
+            {props.bot.damage}
           </span>
           <span>
             <i className="icon shield" />
-            {bot.armor}
+            {props.bot.armor}
+          </span>
+          <span>
+            <div className="ui center aligned segment basic">
+              <button
+                className="ui mini red button"
+                onClick={handleDischarge}
+              >
+                x
+              </button>
+            </div>
           </span>
         </div>
       </div>
-    </div>
-  );
+    </div >
+  )
+}
 
-};
-
-export default BotCard;
+export default BotCard

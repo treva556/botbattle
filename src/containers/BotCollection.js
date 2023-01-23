@@ -1,26 +1,17 @@
-import React from "react";
-import BotCard from "../components/BotCard";
+import React from 'react'
+import BotCard from "../components/BotCard"
 
-class BotCollection extends React.Component {
-	renderBots = () => {
-		return this.props.bots.map(bot => {
-			return <BotCard 
-			key={bot.id} 
-			bot={bot}
-			addBot={this.props.addBot}/>
-		})
-	}
+export default function BotCollection({ botCollection, action, removeCard }) {
+  const displayBotCards = botCollection.map(bot => {
+    return <BotCard bot={bot} action={action} removeCard={removeCard} />
+  })
 
-  render(){
-  	return (
-  	  <div className="ui four column grid">
-    		<div className="row">
-    		  {this.renderBots()}
-    		</div>
-  	  </div>
-  	);
-  }
-
-};
-
-export default BotCollection;
+  return (
+    <div className="ui four column grid">
+      <div className="row">
+        {displayBotCards}
+        You have completed your Bot Army. There are no more bots to collect.
+      </div>
+    </div>
+  )
+}

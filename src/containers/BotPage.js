@@ -1,130 +1,88 @@
-import React from "react";
-import BotsCollection from './BotCollection'
-import YourBotArmy from './YourBotArmy'
+import React, { Component } from "react"
+import BotCollection from './BotCollection'
+import BotArmy from './YourBotArmy'
 import BotSpecs from '../components/BotSpecs'
-import BotSearch from '../components/BotSearch'
-//import Filter from "../components/filter";
 
-class BotsPage extends React.Component {
-  constructor(){
-    super()
-    this.state = {
-      allBots: [],
-      selectBot: undefined,
-      query: '',
-      filter: 'All'
-    }
+class BotsPage extends Component {
+  state = {
+    botCollection: [],
+    filteredCollection: [],
+    botArmy: [],
+    collectionVisible: true,
+    botSpecs: {},
   }
 
-  componentDidMount(){
-    fetch('http://json-server-vercel2-beta.vercel.app/bots')
-    .then(res => res.json())
-    .then(bots => this.setBots(bots))
-      .then(bots => this.setState({
-        allBots: bots
-      }))
+  componentDidMount() {
+    fetch('https://botbattle-67oo.vercel.app/bots')
+      .then(response => response.json())
+      .then(bots => this.setState({ botCollection: bots, filteredCollection: bots }))
+      .then(console.log("Bots Fetched!"))
   }
 
-  setBots = (bots) => {
-    return bots.map(bot => {
-      bot.owned = false
-      return bot
-    })
-  }
-
-  clickBot = (bot) => {
+  addToArmy = (bot) => {
+    const newCollection = this.state.filteredCollection.filter(card => card.bot_class !== bot.bot_class)
     this.setState({
-      selectBot: bot
+      filteredCollection: newCollection,
+      botArmy: [...this.state.botArmy, bot],
+      collectionVisible: true,
     })
   }
 
-  addBot = (selectBot) => {
-    let x = this.state.allBots.map(bot => {
-      if(bot.id === selectBot.id){
-        bot.owned = !bot.owned
-        return bot
-      }else {
-        return bot
-      }
+  removeFromArmy = (bot) => {
+    const newArmy = this.state.botArmy.filter(card => card.id !== bot.id)
+    const armyClasses = newArmy.map(bot => bot.bot_class)
+    const newCollection = this.state.botCollection.filter(bot => {
+      console.log("Filter:", !armyClasses.includes(bot.bot_class))
+      return !armyClasses.includes(bot.bot_class)
     })
-    this.setState({
-      allBots: x
-    })
+    console.log("newCollection", newCollection)
+
+    this.setState({ botArmy: newArmy, filteredCollection: newCollection })
   }
 
-  filterFreeBots = () => {
-    let freeBots = []
-    this.state.allBots.map(bot => {
-      if(bot.owned === false){
-        freeBots.push(bot)
-      }
-    })
-    if(this.state.filter !== 'All'){
-      freeBots = freeBots.filter(bot => 
-        bot.bot_class == this.state.filter
-      )
-    }
-    if(this.state.query){
-      freeBots = freeBots.filter(bot=> 
-        bot.name.toLowerCase().includes(this.state.query.toLowerCase())
-      )
-    }
-    return freeBots
+  removeBotPermanently = (bot) => {
+    let newCollection = this.state.botCollection.filter(card => card !== bot)
+    let newFilteredCollection = this.state.filteredCollection.filter(card => card !== bot)
+    let newArmy = this.state.botArmy.filter(card => card !== bot)
+
+    this.setState({ botCollection: newCollection, filteredCollection: newFilteredCollection, botArmy: newArmy })
+
+    fetch(`https://botbattle-67oo.vercel.app/bots/${bot.id}`, {
+      method: 'DELETE'
+    }).then(response => response.json())
+      .then(result => console.log(result))
   }
 
-  filterOwnedBots = () => {
-    let ownedBots = []
-    this.state.allBots.map(bot => {
-      if(bot.owned === true){
-        ownedBots.push(bot)
-      }
-    })
-    let filtered = ownedBots.filter(bot=> {
-      return bot.name.toLowerCase().includes(this.state.query.toLowerCase())
-    })
-    return filtered
+  displayBotSpecs = (bot) => {
+    this.setState({ collectionVisible: false, botSpecs: bot })
   }
 
-  handleClear = () => {
-    this.setState({
-      query: ''
-    })
+  displayBotCollection = () => {
+    this.setState({ collectionVisible: true })
   }
 
-  handleChange = (query) => {
-    this.setState({
-      query: query
-    })
-  }
-
-  clearSpec = () => {
-    this.setState({
-      selectBot: undefined
-    })
-  }
-
-  filterChange = (value) => {
-    this.setState({
-      filter: value
-    })
-  }
-
-  
   render() {
-    console.log(this.state)
+    const { filteredCollection, botArmy, botSpecs, collectionVisible } = this.state
+
     return (
       <div>
-        <BotSearch handleClear={this.handleClear} handleChange={this.handleChange}/>
-        <br></br>
-       {/*} <Filter filterChange={this.filterChange}/>*/}
-        <YourBotArmy bots={this.filterOwnedBots()} addBot={this.clickBot}/>
-        <br></br>
-        {this.state.selectBot ? <BotSpecs bot={this.state.selectBot} clearSpec={this.clearSpec} addBot={this.addBot} />: 
-          <BotsCollection bots={this.filterFreeBots()} addBot={this.clickBot}/>}
+        <BotArmy
+          bots={botArmy}
+          action={this.removeFromArmy}
+          removeCard={this.removeBotPermanently} />
+        {collectionVisible
+          ? < BotCollection
+            botCollection={filteredCollection}
+            action={this.displayBotSpecs}
+            removeCard={this.removeBotPermanently} />
+          : < BotSpecs
+            bot={botSpecs}
+            back={this.displayBotCollection}
+            enlist={this.addToArmy} />
+        }
       </div>
-    );
+    )
   }
-
 }
 
-export default BotsPage;
+export default BotsPage
