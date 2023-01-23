@@ -3,7 +3,7 @@ import BotsCollection from './BotCollection'
 import YourBotArmy from './YourBotArmy'
 import BotSpecs from '../components/BotSpecs'
 import BotSearch from '../components/BotSearch'
-import Filter from "../components/filter";
+//import Filter from "../components/filter";
 
 class BotsPage extends React.Component {
   constructor(){
