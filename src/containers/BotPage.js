@@ -17,7 +17,7 @@ class BotsPage extends React.Component {
   }
 
   componentDidMount(){
-    fetch('http://localhost:3000/bots')
+    fetch('http://json-server-vercel2-beta.vercel.app/bots')
     .then(res => res.json())
     .then(bots => this.setBots(bots))
       .then(bots => this.setState({
