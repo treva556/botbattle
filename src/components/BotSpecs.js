@@ -24,7 +24,7 @@ const BotSpecs = props => {
           <div className="four wide column">
             <h2>Name: {props.bot.name}</h2>
             <p>
-              <strong>Catchphrase: </strong>
+              <strong>Catch phrase: </strong>
               {props.bot.catchphrase}
             </p>
             <strong>

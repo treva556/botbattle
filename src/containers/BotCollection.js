@@ -7,11 +7,16 @@ export default function BotCollection({ botCollection, action, removeCard }) {
   })
 
   return (
-    <div className="ui four column grid">
+    <div className="ui segment inverted teal bot-army">
+       <div className="ui four column grid">
       <div className="row">
         {displayBotCards}
         You have completed your Bot Army. There are no more bots to collect.
       </div>
     </div>
+
+
+    </div>
+   
   )
 }
