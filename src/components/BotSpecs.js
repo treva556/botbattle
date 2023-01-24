@@ -4,9 +4,9 @@ const botTypeClasses = {
   Assault: "icon military",
   Defender: "icon shield",
   Support: "icon plus circle",
-  Medic: "icon ambulance",
+  Medic: "icon user md",
   Witch: "icon magic",
-  Captain: "icon star"
+  Captain: "icon angular"
 }
 
 const BotSpecs = props => {
