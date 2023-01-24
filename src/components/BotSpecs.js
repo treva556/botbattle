@@ -36,11 +36,11 @@ const BotSpecs = props => {
               <div className="ui three column centered grid">
                 <div className="row">
                   <div className="column">
-                    <i className="icon large circular red heartbeat" />
+                    <i className="icon large circular red heart" />
                     <strong>{props.bot.health}</strong>
                   </div>
                   <div className="column">
-                    <i className="icon large circular yellow lightning" />
+                    <i className="icon large circular red plus square outline" />
                     <strong>{props.bot.damage}</strong>
                   </div>
                   <div className="column">

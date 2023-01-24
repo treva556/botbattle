@@ -46,16 +46,16 @@ const BotCard = props => {
         </div>
         <div className="extra content">
           <span>
-            <i className="icon heartbeat" />
+            <i className="icon red heart" />
             {props.bot.health}
           </span>
 
           <span>
-            <i className="icon lightning" />
+            <i className="icon red plus square" />
             {props.bot.damage}
           </span>
           <span>
-            <i className="icon shield" />
+            <i className="icon blue shield" />
             {props.bot.armor}
           </span>
           <span>
