@@ -61,7 +61,7 @@ const BotCard = props => {
           <span>
             <div className="ui center aligned segment basic">
               <button
-                className="ui mini red button"
+                className="ui mini orange button"
                 onClick={handleDischarge}
               >
                 x

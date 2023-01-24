@@ -56,7 +56,7 @@ const BotSpecs = props => {
                 props.back()
               }
             >
-              Go Back
+              previous page
             </button>
             <button
               className="ui button fluid"
@@ -64,7 +64,7 @@ const BotSpecs = props => {
                 props.enlist(props.bot)
               }
             >
-              Enlist
+              Enroll
             </button>
           </div>
         </div>
